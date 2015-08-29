@@ -63,7 +63,10 @@ export const resolveValue = x =>
  * you might want to go outside of the 0..1 range
  */
 export function tween(position, keyframes, ease=identity) {
-  const positions = Object.keys(keyframes);
+  // mapping to number because Object.keys coerces to strings
+  // todo: is there a better way to handle this?
+  const positions = Object.keys(keyframes).map(Number);
+  
   const position0 = positions[0];
   const positionN = positions[positions.length-1];
   
