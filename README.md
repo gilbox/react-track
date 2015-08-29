@@ -9,19 +9,19 @@ Used to track:
 - `document.documentElement`
 - `document.documentElement.getBoundingClientRect()`
 
-
-      import {TrackDocument, Track} from 'react-track';
-      import {getDocumentRect,
-              getDocumentElement} from 'react-track/tracking-formulas';
-              
-      // ...render:
-        <TrackDocument formulas={[getDocumentRect]}>
-        {rect => 
-          <div>
-            The height of documentElement is {rect.height}
-          </div>}
-        </TrackDocument>
-      
+```
+import {TrackDocument, Track} from 'react-track';
+import {getDocumentRect,
+        getDocumentElement} from 'react-track/tracking-formulas';
+        
+// ...render:
+  <TrackDocument formulas={[getDocumentRect]}>
+  {rect => 
+    <div>
+      The height of documentElement is {rect.height}
+    </div>}
+  </TrackDocument>
+```
       
 ## `<Track />`
 
