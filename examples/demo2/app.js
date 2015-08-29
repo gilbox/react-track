@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import cx from 'classnames';
 import {Easer} from 'functional-easing';
-import {tween, combine} from 'react-track/tween';
-import {rgb, rgba, scale, rotate, 
-        px, percent, translate3d} from 'react-track/tween-value-factories';
+import {tween} from 'react-track/tween';
+import {rotate} from 'react-track/tween-value-factories';
 import Scrubber from './Scrubber';
 import stateful from 'react-stateful-stream';
 import raf from 'raf';
