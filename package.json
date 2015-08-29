@@ -12,7 +12,6 @@
   "scripts": {
     "build-global": "rm -rf build/global && NODE_ENV=production webpack src/index.js build/global/react-track.js && NODE_ENV=production COMPRESS=1 webpack src/index.js build/global/react-track.min.js && echo \"gzipped, the global build is `gzip -c build/global/react-track.min.js | wc -c` bytes\"",
     "build-npm": "rm -rf build/npm && babel -d build/npm/lib ./src && cp README.md build/npm && find -X build/npm/lib -type d -name __tests__ | xargs rm -rf && node -p 'p=require(\"./package-npm\");JSON.stringify(p,null,2)' > build/npm/package.json",
-    "build-npm-all": "npm run build-npm && npm run build-npm-rekapi && npm run build-npm-gsap",
     "examples": "rm -rf examples/js && webpack-dev-server --config examples/webpack.config.js --content-base examples",
     "examples-build": "rm -rf examples/js && webpack --config examples/webpack.build.config.js",
     "test": "jsxhint . && karma start",
