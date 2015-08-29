@@ -33,13 +33,13 @@ export class Track extends Component {
   componentWillReceiveProps() {
     const node = React.findDOMNode(this.nodeRef);
     const rect = node.getBoundingClientRect();
-    this.setState({rect});
+    this.setState({rect, node});
   }
 
   render() {
-    const {rect=defaultRect} = this.state;
+    const {rect=defaultRect, node={}} = this.state;
     return this.props.children(this.DecoratedComponent, 
-      ...this.props.formulas.map(formula => formula(rect)));
+      ...this.props.formulas.map(formula => formula(rect, node)));
   }
 }
 
@@ -91,14 +91,14 @@ export class TrackedDiv extends Component {
   componentWillReceiveProps() {
     const node = React.findDOMNode(this.div);
     const rect = node.getBoundingClientRect();
-    this.setState({rect});
+    this.setState({rect, node});
   }
 
   render() {
-    const {rect=defaultRect} = this.state;
+    const {rect=defaultRect, node={}} = this.state;
     const {component:Comp} = this.props;
     return <Comp ref={r => this.div = r} {...this.props}>
-      {this.props.children(...this.props.formulas.map(formula => formula(rect)))}
+      {this.props.children(...this.props.formulas.map(formula => formula(rect, node)))}
     </Comp>;
   }
 }
