@@ -1,82 +1,104 @@
-const React = require('react');
-const _ = require('lodash');
-const sparkFactory = require('./spark');
+import React, {Component} from 'react';
 
-function factory(options) {
+export const defaultRect = { top: 0, bottom: 0, left: 0, right: 0, width: 0, height: 0 };
+const identity = x => x;
 
-  const proxyElements = {};
-  const spark = sparkFactory(options);
-  const {
-    invalidate,
-    enableInvalidationInterval,
-    disableInvalidationInterval
-    } = spark;
-
-  const sparkScrollFactory = defaultComponent => React.createClass({
-    displayName: 'SparkScroll' + (_.isString(defaultComponent) ? defaultComponent : defaultComponent.displayName),
-
-    render () {
-      var Component = this.props.component || defaultComponent;
-      return (
-        <Component {...this.props}>{this.props.children}</Component>
-      );
-    },
-
-    componentDidMount() {
-      var element = React.findDOMNode(this);
-
-      if (this.props.proxy) {
-        spark(
-          element,
-          () => proxyElements[this.props.proxy] || element,
-          this.props.timeline,
-          this.props);
-      } else {
-        spark(element, () => element, this.props.timeline, this.props);
+export class Track extends Component {
+  static propTypes = { ref: React.PropTypes.func,
+                       children: React.PropTypes.func.isRequired, 
+                       formulas: React.PropTypes.array }
+                       
+  static defaultProps = { formulas: [identity], component: 'div' }
+  
+  constructor(props) {
+    super(props);
+    
+    const self = this;
+    
+    this.DecoratedComponent = class extends Component {
+      static propTypes = { ref: React.PropTypes.func }
+      
+      render() {
+        const {ref = props.ref || identity} = this.props;
+        
+        return <props.component 
+                  {...props} 
+                  {...this.props} 
+                  ref={r => ref(self.nodeRef = r)} />
       }
     }
-  });
+    this.state = {};
+  }
+  
+  componentWillReceiveProps() {
+    const node = React.findDOMNode(this.nodeRef);
+    const rect = node.getBoundingClientRect();
+    this.setState({rect});
+  }
 
-  const SparkScroll = sparkScrollFactory('div');
-  SparkScroll.div = SparkScroll;
-
-  const sparkProxyFactory = defaultComponent => React.createClass({
-    displayName: 'SparkProxy.' + (_.isString(defaultComponent) ? defaultComponent : defaultComponent.displayName),
-
-    render () {
-      var Component = this.props.component || defaultComponent;
-      return (
-        <Component {...this.props}>{this.props.children}</Component>
-      );
-    },
-
-    componentDidMount() {
-      proxyElements[this.props.proxyId] = React.findDOMNode(this);
-    },
-
-    componentWillUnmount() {
-      delete proxyElements[this.props.proxyId];
-    }
-  });
-
-  const SparkProxy = sparkProxyFactory('div');
-  SparkProxy.div = SparkProxy;
-
-  ['span','h1','h2','h3','h4','h5','li','ul','ol','header','section']
-    .forEach( tag => {
-      SparkScroll[tag] = sparkScrollFactory(tag);
-      SparkProxy[tag] = sparkProxyFactory(tag)
-    });
-
-  return {
-    sparkScrollFactory,
-    sparkProxyFactory,
-    SparkScroll,
-    SparkProxy,
-    invalidate,
-    enableInvalidationInterval,
-    disableInvalidationInterval
-  };
+  render() {
+    const {rect=defaultRect} = this.state;
+    return this.props.children(this.DecoratedComponent, 
+      ...this.props.formulas.map(formula => formula(rect)));
+  }
 }
 
-module.exports = factory;
+export class TrackDocument extends Component {
+  static propTypes = { children: React.PropTypes.func.isRequired, 
+                       formulas: React.PropTypes.array }
+                       
+  static defaultProps = { formulas: [identity] }
+
+  constructor(props) {
+    super(props);
+    this.state = { rect: null };
+  }
+  
+  componentDidMount() {
+    window.addEventListener('scroll', event => {
+      this.setState({ rect: document.documentElement.getBoundingClientRect() });
+    });
+  }
+
+  render() {
+    let {rect} = this.state;
+    let element = typeof document !== 'undefined' && document.documentElement;
+    if (!rect) {
+      if (element) {
+        rect = element.getBoundingClientRect();
+      } else {
+        rect = defaultRect;
+        element = {}; // bah
+      }
+    }
+    return this.props.children(...this.props.formulas.map(formula => formula(rect, element)))
+  }
+}
+
+export class TrackedDiv extends Component {
+  static propTypes = { children: React.PropTypes.func.isRequired,
+                       formulas: React.PropTypes.array,
+                       component: React.PropTypes.oneOfType([React.PropTypes.element, 
+                                                             React.PropTypes.string]) }
+                       
+  static defaultProps = { formulas: [identity], component: 'div' }
+  
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+  
+  componentWillReceiveProps() {
+    const node = React.findDOMNode(this.div);
+    const rect = node.getBoundingClientRect();
+    this.setState({rect});
+  }
+
+  render() {
+    const {rect=defaultRect} = this.state;
+    const {component:Comp} = this.props;
+    return <Comp ref={r => this.div = r} {...this.props}>
+      {this.props.children(...this.props.formulas.map(formula => formula(rect)))}
+    </Comp>;
+  }
+}
