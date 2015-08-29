@@ -2,6 +2,9 @@
 
 Track the position of DOM elements.
 
+    npm install react-track --save
+    
+
 ## `<TrackDocument />`
 
 Used to track:
