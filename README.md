@@ -1,6 +1,10 @@
 # react-track
 
-Track the position of DOM elements. Create cool animations.
+Avoid it if you can, but for a certain class of (mostly animation-related)
+problems, you need to query the DOM. This library provides a way to track
+DOM elements in a functional, declarative manner. Also included are 
+various composable utilities for creating complex timeline-based animation 
+in a react-y component-driven fashion.
 
     npm install react-track --save
     
