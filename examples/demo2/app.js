@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
-import cx from 'classnames';
 import {Easer} from 'functional-easing';
 import {tween} from 'react-track/tween';
 import {rotate} from 'react-track/tween-value-factories';
 import Scrubber from './Scrubber';
-import stateful from 'react-stateful-stream';
-import raf from 'raf';
+import Timeline from 'react-track/timeline';
 
 const easeOutBounce = new Easer().using('out-bounce');
 
@@ -19,51 +17,40 @@ const styles = {
   }
 };
 
-@stateful({
-  time: 0,
-  playing: true
-})
 class App extends Component {
-  componentDidMount() {
-    // animation loop
-    const frame = () => {
-      const {playing, time, edit} = this.props;
-      if (playing) {
-        edit(state => 
-          ({...state, time: state.time === MAX_TIME ? MIN_TIME : state.time+1}));
-      }
-      raf(frame);
-    };
-    raf(frame);
-  }
   
   render() {
-    const {time, playing, edit} = this.props;
-
     return (
-      <div>
-        <h2
-          style={tween(time, {
-            [MIN_TIME]: { transform: rotate(0) },
-            [MAX_TIME]: { transform: rotate(360) } }, easeOutBounce)}>
-          spin
-        </h2>
+      <Timeline 
+        playOnMount={true}
+        min={MIN_TIME} 
+        max={MAX_TIME} 
+        loop={true}>
+      {({time, playing, togglePlay, setTime}) =>
         
-        <button
-          onClick={event => 
-            edit(state => ({...state, playing: !state.playing}))}>
-          {playing ? 'pause' : 'play'}
-        </button>
+        <div style={{padding: 30}}>
         
-        <Scrubber
-          style={styles.scrubber}
-          min={MIN_TIME}
-          max={MAX_TIME}
-          value={time}
-          onChangeValue={time => 
-            edit(state => ({...state, time}))} />
+          <h2
+            style={tween(time, {
+              [MIN_TIME]: { transform: rotate(0) },
+              [MAX_TIME]: { transform: rotate(360) } }, easeOutBounce)}>
+            spin
+          </h2>
+          
+          <button onClick={togglePlay}>
+            {playing ? 'pause' : 'play'}
+          </button>
+          
+          <Scrubber
+            style={styles.scrubber}
+            min={MIN_TIME}
+            max={MAX_TIME}
+            value={time}
+            onChangeValue={setTime} />
             
-      </div>
+        </div>
+        
+      }</Timeline>
     )
   }
 }
