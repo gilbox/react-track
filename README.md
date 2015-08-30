@@ -4,6 +4,8 @@ Track the position of DOM elements.
 
     npm install react-track --save
     
+- [Demo](http://gilbox.github.io/react-track/examples/demo/demo.html): tracking components and tweening
+- [Demo2](http://gilbox.github.io/react-track/examples/demo2/demo.html): tweening, `<Timeline />`, `react-motion`
 
 ## `<TrackDocument />`
 
