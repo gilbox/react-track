@@ -42,6 +42,7 @@
     "mocha": "^2.0.1",
     "raf": "^3.1.0",
     "react": "0.13.x",
+    "react-motion": "^0.2.7",
     "react-stateful-stream": "0.0.2",
     "rekapi": "^1.4.4",
     "rf-changelog": "^0.4.0",
