@@ -1,11 +1,19 @@
 # react-track
 
-Track the position of DOM elements.
+Track the position of DOM elements. Create cool animations.
 
     npm install react-track --save
     
 - [Demo](http://gilbox.github.io/react-track/examples/demo/demo.html): tracking components and tweening
 - [Demo2](http://gilbox.github.io/react-track/examples/demo2/demo.html): tweening, `<Timeline />`, `react-motion`
+
+<sub>This repo currently 
+contains a number of components and functions that don't depend
+on each other, but compose nicely to create interesting animations.
+Some of the code is related to tracking DOM elements, but the rest
+are more generally applicable to animation.
+At some point they may be split up into various npm packages but for now
+they all live in `react-track`.</sub>
 
 ## `<TrackDocument />`
 
@@ -139,9 +147,6 @@ or it could be any other DOM element if you utilize `Track` or `TrackedDiv`.
 
 
 ## `tween(currentFrame, keyframes)`
-
-This repo includes an animation utility function which should probably
-be maintained as a separate project, but for now it lives here.
 
 The first argument, `currentFrame` is a number representing the current 
 position in the animation **timeline**. It can represent actual time, or as in the 
