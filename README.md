@@ -4,8 +4,8 @@ Track the position of DOM elements. Create cool animations.
 
     npm install react-track --save
     
-- [Demo](http://gilbox.github.io/react-track/examples/demo/demo.html): tracking components and tweening
-- [Demo2](http://gilbox.github.io/react-track/examples/demo2/demo.html): tweening, `<Timeline />`, `react-motion`
+- [Demo](http://gilbox.github.io/react-track/examples/demo/demo.html): [[source](https://github.com/gilbox/react-track/blob/master/examples/demo/app.js)] tracking components and tweening
+- [Demo2](http://gilbox.github.io/react-track/examples/demo2/demo.html): [[source](https://github.com/gilbox/react-track/blob/master/examples/demo2/app.js)] tweening, `<Timeline />`, `react-motion`
 
 <sub>This repo currently 
 contains a number of components and functions that don't depend
