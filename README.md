@@ -224,7 +224,7 @@ time and more time building your animation.
         </button>
         
       </div>
-    </Timeline>
+    }</Timeline>
 
 The `<Timeline />` component is pretty basic right now. If you 
 encounter a missing feature that you need, please add it and submit a PR. 
