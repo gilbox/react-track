@@ -33,7 +33,8 @@ class App extends Component {
           <h2
             style={tween(time, {
               [MIN_TIME]: { transform: rotate(0) },
-              [MAX_TIME]: { transform: rotate(360) } }, easeOutBounce)}>
+              [MAX_TIME]: { transform: rotate(360) } }, 
+              easeOutBounce)}>
             spin
           </h2>
           
