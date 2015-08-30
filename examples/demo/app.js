@@ -35,7 +35,7 @@ class App extends Component {
         topBottom, topCenter, centerCenter, bottomBottom, bottomTop) => 
         <div style={{minHeight:'5000px'}}>
         
-          <a href="https://github.com/gilbox/spark-scroll">
+          <a href="https://github.com/gilbox/react-track">
             <img
               style={{position: 'absolute', top: 0, right: 0, border: 0}}
               src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67"
@@ -45,7 +45,7 @@ class App extends Component {
           <TrackedDiv className="hero" formulas={[topTop]}>
           { (posTopTop) =>
             <div>
-              <a href="https://github.com/gilbox/react-spark-scroll">
+              <a href="https://github.com/gilbox/react-track">
                 <h1
                   style={tween(scrollY, {
                     [posTopTop]: { opacity: 1, transform: translate3d(0,150,0) },
@@ -213,7 +213,7 @@ class App extends Component {
           
           <div className="spacer50"></div>
 
-          <a href="https://github.com/gilbox/react-spark-scroll">
+          <a href="https://github.com/gilbox/react-track">
             <img className="center" src="GitHub-Mark-64px.png" alt=""/>
           </a>
 
