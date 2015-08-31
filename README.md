@@ -149,6 +149,9 @@ the vertical center of some container element. The container element could
 be `document.documentElement` if you utilize `TrackDocument`, 
 or it could be any other DOM element if you utilize `Track` or `TrackedDiv`.
 
+Creating custom formulas is relatively easy. 
+Check out [`tracking-formulas.js`](https://github.com/gilbox/react-track/blob/master/src/tracking-formulas.js)
+for inspiration.
 
 ## `tween(currentFrame, keyframes)`
 
@@ -186,10 +189,6 @@ tween value factory. Check out
 [`tween-value-factories.js`](https://github.com/gilbox/react-track/blob/master/src/tween-value-factories.js)
 and you'll see what I mean.
 
-Creating custom formulas is also relatively easy. 
-Check out [`tracking-formulas.js`](https://github.com/gilbox/react-track/blob/master/src/tracking-formulas.js)
-for inspiration.
-
 I need to add more documentation about the `tween` function, but in the 
 meantime see the examples in the repo.
 
@@ -202,8 +201,8 @@ time and more time building your animation.
 
     <Timeline 
       playOnMount={true}
-      min={MIN_TIME} 
-      max={MAX_TIME} 
+      min={0} 
+      max={100} 
       loop={true}>
     {({time, playing, togglePlay, setTime}) => 
       <div>
