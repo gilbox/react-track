@@ -207,7 +207,7 @@ time and more time building your animation.
     {({time, playing, togglePlay, setTime}) => 
       <div>
         
-        The timeline is {playing || 'not '}playing! <br />
+        The timeline is {playing ? '' : 'not '}playing! <br />
         Current time is {time}. <br />
         
         We can easily create a pause button like this:<br />
