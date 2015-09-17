@@ -11,4 +11,6 @@ export const rotate = createTweenValueFactory(value => `rotate(${value})`, deg);
 export const px = createTweenValueFactory(value => `${value}px`);
 export const em = createTweenValueFactory(value => `${value}em`);
 export const percent = createTweenValueFactory(value => `${value}%`);
+export const translateX = createTweenValueFactory(value => `translateX(${value})`, px);
+export const translateY = createTweenValueFactory(value => `translateY(${value})`, px);
 export const translate3d = createTweenValueFactory(value => `translate3d(${value.join(',')})`, px);
