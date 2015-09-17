@@ -92,14 +92,14 @@ export default class RollButton extends Component {
                       50: {transform: translateY(0)},
                     }, easeOutElastic)
                   }}>
-                  <div style={{opacity: tween(time, {0: 1, 30: 1, 53: 0}), position: 'absolute', bottom: 0, textAlign: 'left'}}>
+                  <div style={{opacity: tween(time, {0: 1, 30: 1, 40: 0}), position: 'absolute', bottom: 0, textAlign: 'left'}}>
                     {topList.map(item =>
                       <div style={listStyle} key={item}>{item}</div>)}
                   </div>
                   <div style={{position: 'absolute', top: '100%', textAlign: 'left'}}>
-                    <div style={{color: 'black'}}>{currentText}</div>
+                    <div style={{color: 'black', opacity: tween(time, {0:0.4, 18:0.4, 22:1})}}>{currentText}</div>
                     {bottomList.map(item =>
-                      <div style={{opacity: tween(time, {0: 1, 30: 1, 53: 0}), ...listStyle}} key={item}>{item}</div>)}
+                      <div style={{opacity: tween(time, {0: 1, 30: 1, 40: 0}), ...listStyle}} key={item}>{item}</div>)}
                   </div>
                 </div>
             }</Timeline>
