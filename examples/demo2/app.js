@@ -18,8 +18,8 @@ const styles = {
     boxSizing: 'border-box',
   },
   ball: {
-    borderRadius: '50%', 
-    width: '20px', 
+    borderRadius: '50%',
+    width: '20px',
     height: '20px',
     position: 'absolute',
     backgroundColor: 'white',
@@ -28,24 +28,24 @@ const styles = {
 };
 
 class App extends Component {
-  
+
   render() {
     return (
-      <Timeline 
+      <Timeline
         playOnMount={true}
-        min={MIN_TIME} 
-        max={MAX_TIME} 
+        min={MIN_TIME}
+        max={MAX_TIME}
         loop={true}>
       {({time, playing, togglePlay, setTime}) => {
-        
+
         const top = (100 + 40 * Math.sin(time/5));
         const left = tween(time, {
           [MIN_TIME]: 0,
           [MAX_TIME]: 100
         }, easeOutSine);
-        
+
         return <div style={{padding: 30}}>
-        
+
           <Spring endValue={{val: {top,left}}}>
           {interpolated =>
             <div
@@ -55,35 +55,35 @@ class App extends Component {
                 left: interpolated.val.left + '%',
               }} />
           }</Spring>
-          
-          <div 
+
+          <div
             style={{
               ...styles.ball,
               top,
               left: left + '%'
             }}/>
-          
+
           <h2
             style={tween(time, {
               [MIN_TIME]: { transform: rotate(0) },
-              [MAX_TIME]: { transform: rotate(360) } }, 
+              [MAX_TIME]: { transform: rotate(360) } },
               easeOutBounce)}>
             spin
           </h2>
-          
+
           <button onClick={togglePlay}>
             {playing ? 'pause' : 'play'}
           </button>
-          
+
           <Scrubber
             style={styles.scrubber}
             min={MIN_TIME}
             max={MAX_TIME}
             value={time}
             onChangeValue={setTime} />
-            
+
         </div>}
-        
+
       }</Timeline>
     )
   }

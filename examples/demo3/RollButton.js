@@ -8,10 +8,8 @@ import {track, derive} from 'react-derive';
 import u from 'updeep';
 const immutable = u({});
 
-const sub = (edit, ...path) =>
-  transform => edit(u.updateIn(path, transform));
-
-const easeOutElastic = new Easer().using('out-elastic').withParameters(1,1.1);
+const easeOutElastic = new Easer().using('out-elastic').withParameters(2,.6);
+const easeOutSine = new Easer().using('out-sine');
 
 const borderColor = 'rgba(255,255,255,1.0)';
 const listStyle = { color: '#ccc' };
@@ -45,7 +43,7 @@ export default class RollButton extends Component {
             width,
             height } = this.props;
     const [topList, bottomList] = partitionedList;
-    const set = (path, newValue) => sub(edit, path)(oldValue => newValue);
+    const update = updates => edit(u(updates));
     const currentText = list[currentIndex];
 
     return (
@@ -65,11 +63,14 @@ export default class RollButton extends Component {
         }}
         onMouseEnter={event => {
           this.timeline.setTime(0);
-          this.timeline.togglePlay(true);
-          set('currentIndex', ~~(Math.random() * list.length));
-          set('isOver', true)}}
+          this.timeline.play();
+          update({
+            currentIndex: ~~(Math.random() * list.length),
+            isOver: true
+          });
+        }}
         onMouseLeave={event =>
-          set('isOver', false)}>
+          update({isOver: false})}>
         <div
           style={{
             position: 'relative',
@@ -88,9 +89,10 @@ export default class RollButton extends Component {
                 <div style={{
                   position: 'absolute',
                   ...tween(time, {
-                      0: {transform: translateY(450)},
-                      50: {transform: translateY(0)},
-                    }, easeOutElastic)
+                      0: { transform: translateY(450), ease: easeOutSine },
+                      30: { transform: translateY(-15), ease: easeOutElastic },
+                      50: { transform: translateY(0) },
+                    })
                   }}>
                   <div style={{opacity: tween(time, {0: 1, 30: 1, 40: 0}), position: 'absolute', bottom: 0, textAlign: 'left'}}>
                     {topList.map(item =>
