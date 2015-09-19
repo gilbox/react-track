@@ -3,7 +3,7 @@ import {Easer} from 'functional-easing';
 import {tween} from 'react-track/tween';
 import {rotate, percent} from 'react-track/tween-value-factories';
 import Scrubber from './Scrubber';
-import Timeline from 'react-track/timeline';
+import {Timeline} from 'react-track/timeline';
 import {Spring} from 'react-motion';
 
 const easeOutBounce = new Easer().using('out-bounce');
