@@ -154,7 +154,7 @@ Creating custom formulas is relatively easy.
 Check out [`tracking-formulas.js`](https://github.com/gilbox/react-track/blob/master/src/tracking-formulas.js)
 for inspiration.
 
-## `tween(currentFrame, keyframes)`
+## `tween(currentFrame, keyframes, [ease])`
 
 The first argument, `currentFrame` is a number representing the current
 position in the animation **timeline**. It can represent actual time, or as in the
