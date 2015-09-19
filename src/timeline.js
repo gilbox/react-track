@@ -10,6 +10,9 @@ export default class Timeline extends Component {
     this.tick = ::this.tick;
 
     this.expose = {
+      play: ::this.play,
+      pause: ::this.pause,
+      setPlay: ::this.setPlay,
       setTime: ::this.setTime,
       togglePlay: ::this.togglePlay
     }
@@ -38,14 +41,17 @@ export default class Timeline extends Component {
     this.setState({time});
   }
 
+  play() { this.setPlay(true) }
+  pause() { this.setPlay(false) }
+
+  setPlay(playing) {
+    if (!this.state.playing && playing) raf(this.tick);
+    this.setState({ playing });
+  }
+
   togglePlay(playing) {
-    if (playing !== undefined) {
-      if (!this.state.playing && playing) raf(this.tick);
-      this.setState({ playing });
-    } else {
-      if (!this.state.playing) raf(this.tick);
-      this.setState({playing: !this.state.playing});
-    }
+    if (!this.state.playing) raf(this.tick);
+    this.setState({playing: !this.state.playing});
   }
 
   componentDidMount() {
