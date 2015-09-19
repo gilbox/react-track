@@ -26,7 +26,7 @@ export class Timeline extends Component {
   }
 
   componentWillRecieveProps(nextProps) {
-    if (nextProps.timeliner !== this.timeliner) {
+    if (nextProps.timeliner && nextProps.timeliner !== this.timeliner) {
       this._removeListener();
       this.timeliner = nextProps.timeliner;
       this._addListener();
