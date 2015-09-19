@@ -27,14 +27,16 @@ class App extends Component {
                 width={300}
                 height={70}
                 staticText="Hug"
-                list={['Softly', 'Blindly', 'Later',
+                initialIndex={1}
+                list={['Someone', 'Everyone',
+                       'Softly', 'Blindly', 'Later',
                        'Twice', 'Longingly', 'Randomly',
                        'Always', 'Freely', 'Warmly',
                        'Generously', 'Forever', 'Often',
-                       'Money', 'Gold', 'Funny',
+                       'For Profit', 'For Gold', 'The Funny',
                        'Scrappy', 'Steampunk', 'Instant',
-                       'Homemade', 'DIY', 'Green',
-                       'Fun', 'Funky', 'Burpy']} />
+                       'Homemade Rustics', 'DIYers', 'Green Things',
+                       'Fun ppl', 'Funky', 'Burpy Bosses']} />
             </div>
           </div>
         </div>
