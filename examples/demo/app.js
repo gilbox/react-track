@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import cx from 'classnames';
 import {Easer} from 'functional-easing';
 import {Track, TrackedDiv, TrackDocument} from 'react-track';
-import {tween, combine} from 'react-track/tween';
+import {tween, combine} from 'react-imation';
 import {topTop,
         topBottom,
         centerCenter,
@@ -13,7 +13,7 @@ import {topTop,
         getDocumentElement,
         calculateScrollY} from 'react-track/tracking-formulas';
 import {rgb, rgba, scale, rotate, 
-        px, percent, translate3d} from 'react-track/tween-value-factories';
+        px, percent, translate3d} from 'react-imation/tween-value-factories';
 
 const easeOutBounce = new Easer().using('out-bounce');
 
@@ -25,23 +25,23 @@ class App extends Component {
     this.offsetTarget = length;
     node.style.strokeDasharray = length + ' ' + length; // i'm cheating
   }
-  
+
   render() {
     return (
-      <TrackDocument formulas={[getDocumentElement, getDocumentRect, calculateScrollY, 
-                               topTop, topBottom, topCenter, centerCenter, bottomBottom, 
+      <TrackDocument formulas={[getDocumentElement, getDocumentRect, calculateScrollY,
+                               topTop, topBottom, topCenter, centerCenter, bottomBottom,
                                bottomTop]}>
-      {(documentElement, documentRect, scrollY, topTop, 
-        topBottom, topCenter, centerCenter, bottomBottom, bottomTop) => 
+      {(documentElement, documentRect, scrollY, topTop,
+        topBottom, topCenter, centerCenter, bottomBottom, bottomTop) =>
         <div style={{minHeight:'5000px'}}>
-        
+
           <a href="https://github.com/gilbox/react-track">
             <img
               style={{position: 'absolute', top: 0, right: 0, border: 0}}
               src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67"
               alt="Fork me on GitHub"
               dataCanonicalSrc="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" /></a>
-              
+
           <TrackedDiv className="hero" formulas={[topTop]}>
           { (posTopTop) =>
             <div>
@@ -76,38 +76,38 @@ class App extends Component {
                 })}>v</div>
             </div>
           }</TrackedDiv>
-          
+
           {/* fade */}
           <Track component="h2" formulas={[topBottom, centerCenter]}>
-          {(H2,posTopBottom,posCenterCenter) => 
+          {(H2,posTopBottom,posCenterCenter) =>
             <H2
               style={tween(scrollY, {
                 [posTopBottom]: {opacity: 0},
                 [posCenterCenter]: {opacity: 1} })}>fade</H2>
           }</Track>
-          
+
           {/* move */}
           <Track component="h2" formulas={[topBottom, centerCenter]}>
-          {(H2,posTopBottom,posCenterCenter) => 
+          {(H2,posTopBottom,posCenterCenter) =>
             <H2
               style={tween(scrollY, {
                 [posTopBottom]: { marginLeft: px(-500), opacity: 0 },
-                [posCenterCenter]: { marginLeft: px(0), opacity: 1 } 
+                [posCenterCenter]: { marginLeft: px(0), opacity: 1 }
               }, easeOutBounce)}>move</H2>
           }</Track>
 
           {/* spin */}
           <TrackedDiv formulas={[topBottom, centerCenter]}>
-          {(posTopBottom,posCenterCenter) => 
+          {(posTopBottom,posCenterCenter) =>
             <h2
               style={tween(scrollY, {
                 [posTopBottom]: { transform: rotate(0) },
                 [posCenterCenter]: { transform: rotate(360) } })}>spin</h2>
           }</TrackedDiv>
-          
+
           {/* scale */}
           <TrackedDiv formulas={[topCenter]}>
-          {(posTopCenter) => 
+          {(posTopCenter) =>
             <h2
               proxy="scale-proxy"
               style={tween(scrollY, {
@@ -116,23 +116,23 @@ class App extends Component {
                 [posTopCenter+70]: { transform: scale(1), opacity: 1 }
               }, easeOutBounce)}>scale</h2>
           }</TrackedDiv>
-          
+
           {/* pin, reveal, slide, color, unpin */}
           <TrackedDiv className="pin-cont" formulas={[topTop, bottomBottom]}>
           {(posTopTop, posBottomBottom) =>
-            
+
             <section
               className={cx("pin",{
                 'pin-pin':scrollY > posTopTop,
                 'pin-unpin':scrollY > posBottomBottom})}>
-              
+
               <h3
                 className="pin-txt"
                 style={tween(scrollY,{
                   [posTopTop]: { top: percent(0), marginTop: px(0) },
                   [posTopTop+50]: { top: percent(50), marginTop: px(-60) }
                 })}>pin</h3>
-                
+
               <div
                 className="reveal"
                 style={tween(scrollY, {
@@ -141,7 +141,7 @@ class App extends Component {
                 })}>
                 <h3 className="reveal-txt">reveal</h3>
               </div>
-              
+
               <div
                 className={cx("slide",{hide:scrollY < posTopTop+250})}
                 style={tween(scrollY, {
@@ -164,16 +164,16 @@ class App extends Component {
                    [posTopTop+600]: { top: percent(100) },
                    [posBottomBottom]: { top: percent(50) }
                  })}>unpin</h3>
-                 
+
               </div>
-                
+
             </section>
           }</TrackedDiv>
-          
+
           <div className="spacer50"></div>
 
           {/* parallax */}
-          
+
           <a href="https://www.flickr.com/photos/rafagarcia_/15262287738/in/pool-83823859@N00/">
             <Track component="div" formulas={[topBottom, bottomTop]}>
             {(Div, posTopBottom, posBottomTop) =>
@@ -210,7 +210,7 @@ class App extends Component {
               </Div>
             }</Track>
           </a>
-          
+
           <div className="spacer50"></div>
 
           <a href="https://github.com/gilbox/react-track">
@@ -222,7 +222,7 @@ class App extends Component {
           <p className="center">This demo was inspired by <a href="http://janpaepke.github.io/ScrollMagic/">ScrollMagic</a></p>
 
           <div className="spacer10"></div>
-          
+
         </div>
       }</TrackDocument>
     )
