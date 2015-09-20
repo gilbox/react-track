@@ -23,24 +23,24 @@ function mapObject(fn) {
   return result;
 }
 
-export function tweenValues(progress, a, b) {
+export function tweenValues(progress, a, b, easer) {
   // for added flexibility with easing, we don't enforce
   // that b is wrapped
   if (isWrapped(a))
-    return a.tween(progress, a, b);
+    return a.tween(progress, a, b, easer);
 
-  // now we enforce that a and ba are the same type
+  // now we enforce that a and b are the same type
   if (typeof(b) !== typeof(a))
     throw(Error(`Tried to tween mismatched types ${typeof(a)} !== ${typeof(b)}`));
 
   if (a instanceof Array)
-    return a.map((value,index) => tweenValues(progress, value, b[index]));
+    return a.map((value,index) => tweenValues(progress, value, b[index], easer));
 
   if (isNumber(a))
-    return a + progress * (b-a);
+    return a + easer(progress) * (b-a);
 
   // object
-  return a::mapObject((v,k) => k !== 'ease' && tweenValues(progress, v, b[k]))
+  return a::mapObject((v,k) => k !== 'ease' && tweenValues(progress, v, b[k], easer))
 }
 
 export const resolveValue = x =>
@@ -74,10 +74,10 @@ export const resolveValue = x =>
  * - Adding an `ease` property to a keyframe will override the `ease`
  *   argument of the `tween()` function.
  *
- * - Wrapping a value with the `ease()` value factory will combine
- *   with any `tween()`-level easing.
+ * - Wrapping a value with the `ease()` value factory will override
+ *   any keyframe or `tween()`-level easing.
  */
-export function tween(position, keyframes, ease=identity) {
+export function tween(position, keyframes, easer=identity) {
   // mapping to number because Object.keys coerces to strings
   // todo: is there a better way to handle this?
   const positions = Object.keys(keyframes).map(Number);
@@ -104,9 +104,10 @@ export function tween(position, keyframes, ease=identity) {
   const progress = delta / range;
 
   return tweenValues(
-    (keyframes[positionA].ease || ease)(progress),
+    progress,
     keyframes[positionA],
-    keyframes[positionB])
+    keyframes[positionB],
+    keyframes[positionA].ease || easer);
 }
 
 /**
@@ -123,8 +124,8 @@ export function tween(position, keyframes, ease=identity) {
  * return a value factory.
  */
 export function createTweenValueFactory(formatter, defaultWrapper) {
-  const tween = (progress, a, b) =>
-    formatter(tweenValues(progress, a.value, b.value));
+  const tween = (progress, a, b, easer) =>
+    formatter(tweenValues(progress, a.value, b.value, easer));
 
   return (...value) => {
     if (defaultWrapper)
@@ -168,11 +169,12 @@ export function combine(...wrappedValues) {
 // it's placed outside of `combine` as an optimization
 function combineTween(progress,
   {wrappedValues: wrappedValuesA},
-  {wrappedValues: wrappedValuesB}
+  {wrappedValues: wrappedValuesB},
+  easer
 ) {
   return wrappedValuesA
     .map((wrappedValueA, index) =>
-      tweenValues(progress, wrappedValueA, wrappedValuesB[index]))
+      tweenValues(progress, wrappedValueA, wrappedValuesB[index], easer))
     .join(' ');
 }
 
@@ -183,20 +185,19 @@ function combineTween(progress,
  *      ease factory must wrap value a.
  *
  * Note:
- * Wrapping a value with the `ease()` value factory will combine
- * with any `tween()`-level easing.
+ * Wrapping a value with the `ease()` value factory will override
+ * tween and keyframe-level easing
  **/
 export function ease(easer, wrappedValue) {
   return {
     easedValue: wrappedValue,
     tween(progress, wrappedValueA, wrappedValueB) {
       return tweenValues(
-        easer(progress),
-        // give flexibility not to wrap b value in the ease factory
+        progress,
         wrappedValueA.easedValue,
-        wrappedValueB.easedValue ? wrappedValueB.easedValue : wrappedValueB)
-        // wrappedValueB.easedValue ? wrappedValueA : wrappedValueA.easedValue,
-        // wrappedValueB)
+        // give flexibility not to wrap b value in the ease factory
+        wrappedValueB.easedValue ? wrappedValueB.easedValue : wrappedValueB,
+        easer || identity)
     },
     resolveValue() {
       return resolveValue(wrappedValue);

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Easer} from 'functional-easing';
-import {tween} from 'react-track/tween';
+import {tween, ease} from 'react-track/tween';
 import {translateY} from 'react-track/tween-value-factories';
 import {Timeline, Timeliner} from 'react-track/timeline';
 import stateful from 'react-stateful-stream';
