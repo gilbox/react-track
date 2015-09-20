@@ -4,10 +4,11 @@ Avoid it if you can, but for a certain class of (mostly animation-related)
 problems, you need to query the DOM. This library provides a way to track
 DOM elements in a functional, declarative manner.
 
-**Note: tweening, animation, and timeline-related code has been moved to a new
-package, [`npm-imation`](https://github.com/gilbox/react-imation)**
-
     npm install react-track --save
+
+
+**Note: tweening, animation, and timeline-related stuff lives here: [`react-imation`](https://github.com/gilbox/react-imation)**
+
 
 - [Demo](http://gilbox.github.io/react-track/examples/demo/demo.html): [[source](https://github.com/gilbox/react-track/blob/master/examples/demo/app.js)] tracking components and tweening
 
