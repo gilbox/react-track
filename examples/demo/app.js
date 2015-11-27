@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
 import cx from 'classnames';
 import {Easer} from 'functional-easing';
 import {Track, TrackedDiv, TrackDocument} from 'react-track';
@@ -12,7 +13,7 @@ import {topTop,
         getDocumentRect,
         getDocumentElement,
         calculateScrollY} from 'react-track/tracking-formulas';
-import {rgb, rgba, scale, rotate, 
+import {rgb, rgba, scale, rotate,
         px, percent, translate3d} from 'react-imation/tween-value-factories';
 
 const easeOutBounce = new Easer().using('out-bounce');
@@ -229,4 +230,4 @@ class App extends Component {
   }
 }
 
-React.render(<App/>, document.getElementById('example'));
+ReactDOM.render(<App/>, document.getElementById('example'));

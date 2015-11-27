@@ -1,6 +1,6 @@
 {
   "name": "react-track",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "react element tracking and animation",
   "main": "src",
   "repository": {
@@ -42,10 +42,9 @@
     "lodash": "^3.10.1",
     "mocha": "^2.0.1",
     "raf": "^3.1.0",
-    "react": "0.13.x",
     "react-derive": "^0.1.1",
-    "react-imation": "^0.2.2",
-    "react-motion": "^0.2.7",
+    "react-dom": "^0.14.3",
+    "react-imation": "^0.4.1",
     "react-stateful-stream": "^0.1.0",
     "rekapi": "^1.4.4",
     "rf-changelog": "^0.4.0",
@@ -55,7 +54,7 @@
     "webpack-dev-server": "^1.6.6"
   },
   "peerDependencies": {
-    "react": "0.13.x"
+    "react": ">=0.13.2 || ^0.14"
   },
   "dependencies": {},
   "tags": [
