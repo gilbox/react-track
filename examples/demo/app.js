@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM, { findDOMNode } from 'react-dom';
 import cx from 'classnames';
 import {Easer} from 'functional-easing';
 import {Track, TrackedDiv, TrackDocument} from 'react-track';
@@ -21,7 +21,7 @@ const easeOutBounce = new Easer().using('out-bounce');
 class App extends Component {
   componentDidMount() {
     // initialize svg
-    var node = React.findDOMNode(this.sparkPath);
+    var node = findDOMNode(this.sparkPath);
     var length = ~~ node.getTotalLength();
     this.offsetTarget = length;
     node.style.strokeDasharray = length + ' ' + length; // i'm cheating
