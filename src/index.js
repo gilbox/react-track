@@ -1,5 +1,6 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
+import raf from 'raf';
 
 export const defaultRect = { top: 0, bottom: 0, left: 0, right: 0, width: 0, height: 0 };
 const identity = x => x;
@@ -60,9 +61,28 @@ export class TrackDocument extends React.Component {
   }
 
   componentDidMount() {
-    window.addEventListener('scroll', event => {
+    const { cancel } = raf;
+    let rafId;
+
+    const update = () => {
       this.setState({ rect: document.documentElement.getBoundingClientRect() });
-    });
+    }
+
+    const handleScroll = event => {
+      cancel(rafId);
+      rafId = raf(update);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    this.removeScrollHandler = () => {
+      cancel(rafId);
+      window.removeEventListener('scroll', handleScroll);
+    }
+  }
+
+  componentWillUnmount() {
+    this.removeScrollHandler();
   }
 
   render() {
