@@ -43,9 +43,9 @@ class App extends Component {
               alt="Fork me on GitHub"
               dataCanonicalSrc="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" /></a>
 
-          <TrackedDiv className="hero" formulas={[topTop]}>
-          { (posTopTop) =>
-            <div>
+          <Track className="hero" formulas={[topTop]}>
+          { (Div, posTopTop) =>
+            <Div>
               <a href="https://github.com/gilbox/react-track">
                 <h1
                   style={tween(scrollY, {
@@ -75,8 +75,8 @@ class App extends Component {
                   [posTopTop]: {opacity: 1, transform: translate3d(0,0,0)},
                   [posTopTop+200]: {opacity: 0, transform: translate3d(0,-150,0)}
                 })}>v</div>
-            </div>
-          }</TrackedDiv>
+            </Div>
+          }</Track>
 
           {/* fade */}
           <Track component="h2" formulas={[topBottom, centerCenter]}>
