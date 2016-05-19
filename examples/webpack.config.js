@@ -5,7 +5,6 @@ var webpack = require('webpack');
 function isDirectory(dir) {
   return fs.lstatSync(dir).isDirectory();
 }
-
 module.exports = {
 
   devtool: 'inline-source-map',
@@ -34,7 +33,7 @@ module.exports = {
 
   resolve: {
     alias: {
-      'react-track': path.resolve(__dirname + '../../src/')
+      'react-track': path.resolve(__dirname, '../src/')
     }
   },
 
