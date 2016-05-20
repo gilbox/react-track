@@ -6,13 +6,20 @@ export const defaultRect = { top: 0, bottom: 0, left: 0, right: 0, width: 0, hei
 const identity = x => x;
 
 export function createInjector(component) {
-  class Track extends React.Component {
+  return class Track extends React.Component {
+    static propTypes = { ref: React.PropTypes.func,
+                         children: React.PropTypes.func.isRequired,
+                         formulas: React.PropTypes.array }
+
+    static defaultProps = { formulas: [identity], component }
+
     constructor(props) {
       super(props);
 
       const self = this;
 
       this.DecoratedComponent = class extends React.Component {
+        static propTypes = { ref: React.PropTypes.func }
 
         render() {
           const {ref = self.props.ref || identity} = this.props;
@@ -23,7 +30,6 @@ export function createInjector(component) {
                     ref={r => ref(self.nodeRef = r)} />
         }
       }
-      this.DecoratedComponent.propTypes = { ref: React.PropTypes.func };
       this.state = {};
     }
 
@@ -39,18 +45,16 @@ export function createInjector(component) {
         ...this.props.formulas.map(formula => formula(rect, node)));
     }
   }
-  Track.propTypes = {
-    ref: React.PropTypes.func,
-     children: React.PropTypes.func.isRequired,
-     formulas: React.PropTypes.array
-  };
-  Track.defaultProps = { formulas: [identity], component };
-  return Track;
 }
 
 export const Track = createInjector('div');
 
 export class TrackDocument extends React.Component {
+  static propTypes = { children: React.PropTypes.func.isRequired,
+                       formulas: React.PropTypes.array }
+
+  static defaultProps = { formulas: [identity] }
+
   constructor(props) {
     super(props);
     this.state = { rect: null };
@@ -96,15 +100,15 @@ export class TrackDocument extends React.Component {
   }
 }
 
-TrackDocument.propTypes = {
-  children: React.PropTypes.func.isRequired,
-  formulas: React.PropTypes.array
-};
-TrackDocument.defaultProps = { formulas: [identity] };
-
-
 export function createTrackedComponent(component) {
-  class Tracked extends React.Component {
+  return class Tracked extends React.Component {
+    static propTypes = { children: React.PropTypes.func.isRequired,
+                         formulas: React.PropTypes.array,
+                         component: React.PropTypes.oneOfType([React.PropTypes.element,
+                                                               React.PropTypes.string]) }
+
+    static defaultProps = { formulas: [identity], component }
+
     constructor(props) {
       super(props);
       this.state = {};
@@ -127,15 +131,6 @@ export function createTrackedComponent(component) {
       );
     }
   }
-  Tracked.propTypes = {
-    children: React.PropTypes.func.isRequired,
-    formulas: React.PropTypes.array,
-    component: React.PropTypes.oneOfType([React.PropTypes.element,
-                                          React.PropTypes.string])
-  };
-  Tracked.defaultProps = { formulas: [identity], component };
-
-  return Tracked;
 }
 
 export const TrackedDiv = createTrackedComponent('div');
