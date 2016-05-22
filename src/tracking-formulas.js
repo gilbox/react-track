@@ -1,3 +1,5 @@
+import {defaultRect} from './index';
+
 export const topTop = containerRect => rect => 
   ~~(rect.top - containerRect.top);
   
@@ -25,6 +27,7 @@ export const bottomTop = containerRect => rect =>
 export const bottomCenter = (containerRect, container) => rect =>
   ~~(rect.bottom - containerRect.top - container.clientHeight / 2);
 
+export const isMeasured = rect => rect !== defaultRect;
 export const getDocumentRect = documentRect => documentRect;
 export const getDocumentElement = (_,documentElement) => documentElement;
 export const calculateScrollY = ({top}) => -top;
