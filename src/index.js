@@ -51,9 +51,10 @@ export const Track = createInjector('div');
 
 export class TrackDocument extends React.Component {
   static propTypes = { children: React.PropTypes.func.isRequired,
-                       formulas: React.PropTypes.array }
+                       formulas: React.PropTypes.array,
+                       updateOnDidMount: React.PropTypes.bool }
 
-  static defaultProps = { formulas: [identity] }
+  static defaultProps = { formulas: [identity], updateOnDidMount: false }
 
   constructor(props) {
     super(props);
@@ -78,6 +79,10 @@ export class TrackDocument extends React.Component {
     this.removeScrollHandler = () => {
       cancel(rafId);
       window.removeEventListener('scroll', handleScroll);
+    }
+
+    if (this.props.updateOnDidMount) {
+      update();
     }
   }
 
