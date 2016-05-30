@@ -7,27 +7,27 @@ const identity = x => x;
 
 export function createInjector(component) {
   return class Track extends React.Component {
-    static propTypes = { ref: React.PropTypes.func,
+    static propTypes = { trackedRef: React.PropTypes.func,
                          children: React.PropTypes.func.isRequired,
                          formulas: React.PropTypes.array }
 
     static defaultProps = { formulas: [identity], component }
 
     constructor(props) {
-      super(props);
+      super(props)
 
       const self = this;
 
       this.DecoratedComponent = class extends React.Component {
-        static propTypes = { ref: React.PropTypes.func }
+        static propTypes = { trackedRef: React.PropTypes.func }
 
         render() {
-          const {ref = self.props.ref || identity} = this.props;
+          const {trackedRef = self.props.trackedRef || identity} = this.props;
 
           return <props.component
-                    {...self.props}
-                    {...this.props}
-                    ref={r => ref(self.nodeRef = r)} />
+            {...self.props}
+            {...this.props}
+            trackedRef={r => ref(self.nodeRef = r)} />
         }
       }
       this.state = {};
