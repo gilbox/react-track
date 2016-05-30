@@ -27,7 +27,7 @@ export function createInjector(component) {
           return <props.component
                     {...self.props}
                     {...this.props}
-                    ref={r => ref(self.nodeRef = r)} />
+                    ref={r => trackedRef(self.nodeRef = r)} />
         }
       }
       this.state = {};
