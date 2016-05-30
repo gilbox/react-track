@@ -86,6 +86,12 @@ the `containerRect` argument, which comes from
 In the inner scope, the `<Track />` component supplies the `rect` argument
 which comes from `awesomeDOMElement.getClientBoundingRect()`.
 
+### `trackedRef`
+
+`<Track />` supports an optional `trackedRef` prop which
+is type `Function`, and works the same way as the functional form of 
+React's built-in `ref` prop.
+
 ## `<TrackedDiv />`
 
 It's pretty common to need to track a div, so there's
