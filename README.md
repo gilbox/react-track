@@ -152,3 +152,15 @@ or it could be any other DOM element if you utilize `Track` or `TrackedDiv`.
 Creating custom formulas is relatively easy.
 Check out [`tracking-formulas.js`](https://github.com/gilbox/react-track/blob/master/src/tracking-formulas.js)
 for inspiration.
+
+## Contributing
+
+I am adding this info with a hazy memory so if you are a contributor and find any of it is incorrect, please update this README file.
+
+### Publishing to NPM
+
+        # preparation
+        npm run build-npm
+        
+        # actually publish to npm
+        npm run publish
