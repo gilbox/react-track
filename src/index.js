@@ -22,11 +22,13 @@ export function createInjector(component) {
         static propTypes = { trackedRef: React.PropTypes.func }
 
         render() {
-          const {trackedRef = self.props.trackedRef || identity} = this.props;
-
+          const {
+            trackedRef = self.props.trackedRef || identity,
+            formulas,
+            component,
+            ...rest } = {...self.props, ...this.props};
           return <props.component
-                    {...self.props}
-                    {...this.props}
+                    {...rest}
                     ref={r => trackedRef(self.nodeRef = r)} />
         }
       }
@@ -128,9 +130,13 @@ export function createTrackedComponent(component) {
     render() {
       const {rect=defaultRect, node={}} = this.state;
       const {props} = this;
+      const {
+        formulas,
+        component,
+        ...rest } = props;
 
       return (
-        <props.component ref={r => this.nodeRef = r} {...props}>
+        <props.component ref={r => this.nodeRef = r} {...rest}>
           {props.children(...props.formulas.map(formula => formula(rect, node)))}
         </props.component>
       );
