@@ -159,8 +159,15 @@ I am adding this info with a hazy memory so if you are a contributor and find an
 
 ### Publishing to NPM
 
+- First make sure to bump the version number in `package.json` in accordance with semantic versioning practices. If you think a major version bump is warranted, go for it!
+
         # preparation
         npm run build-npm
         
         # actually publish to npm
         npm run publish
+
+- Create a git tag and publish it
+
+        git tag vVERSION.NUMBER.WHATEVER
+        git push origin --tags
