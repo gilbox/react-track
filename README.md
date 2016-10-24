@@ -155,8 +155,6 @@ for inspiration.
 
 ## Contributing
 
-I am adding this info with a hazy memory so if you are a contributor and find any of it is incorrect, please update this README file.
-
 ### Publishing to NPM
 
 - First make sure to bump the version number in `package.json` in accordance with semantic versioning practices. If you think a major version bump is warranted, go for it!
