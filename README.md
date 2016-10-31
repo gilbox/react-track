@@ -168,4 +168,4 @@ for inspiration.
 - Create a git tag and publish it
 
         git tag vVERSION.NUMBER.WHATEVER
-        git push origin --tags
+        git push origin vVERSION.NUMBER.WHATEVER
