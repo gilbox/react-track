@@ -70,6 +70,12 @@ or track your `AwesomeComponent`
 
       }</TrackDocument>
 
+It's important to note that `AwesomeComponent` must be stateful in this example.
+At the time of writing `react-track` does not support stateless functional
+components (SFCs) due to its reliance on the ref attribute, which such
+components do not provide. In order to track an SFC, wrap it in a
+[TrackedDiv](#trackeddiv-).
+
 Note that in the code above, there are two different
 scopes with a `topTop` variable. One scope is nested
 inside of the other. The `topTop` variable of the inner
