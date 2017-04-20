@@ -1,5 +1,6 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
+import PropTypes from 'prop-types';
 import raf from 'raf';
 
 export const defaultRect = { top: 0, bottom: 0, left: 0, right: 0, width: 0, height: 0 };
@@ -7,9 +8,9 @@ const identity = x => x;
 
 export function createInjector(component) {
   return class Track extends React.Component {
-    static propTypes = { trackedRef: React.PropTypes.func,
-                         children: React.PropTypes.func.isRequired,
-                         formulas: React.PropTypes.array }
+    static propTypes = { trackedRef: PropTypes.func,
+                         children: PropTypes.func.isRequired,
+                         formulas: PropTypes.array }
 
     static defaultProps = { formulas: [identity], component }
 
@@ -19,7 +20,7 @@ export function createInjector(component) {
       const self = this;
 
       this.DecoratedComponent = class extends React.Component {
-        static propTypes = { trackedRef: React.PropTypes.func }
+        static propTypes = { trackedRef: PropTypes.func }
 
         render() {
           const {
@@ -46,15 +47,15 @@ export function createInjector(component) {
       return this.props.children(this.DecoratedComponent,
         ...this.props.formulas.map(formula => formula(rect, node)));
     }
-  }
+  };
 }
 
 export const Track = createInjector('div');
 
 export class TrackDocument extends React.Component {
-  static propTypes = { children: React.PropTypes.func.isRequired,
-                       formulas: React.PropTypes.array,
-                       updateOnDidMount: React.PropTypes.bool }
+  static propTypes = { children: PropTypes.func.isRequired,
+                       formulas: PropTypes.array,
+                       updateOnDidMount: PropTypes.bool }
 
   static defaultProps = { formulas: [identity], updateOnDidMount: false }
 
@@ -109,10 +110,10 @@ export class TrackDocument extends React.Component {
 
 export function createTrackedComponent(component) {
   return class Tracked extends React.Component {
-    static propTypes = { children: React.PropTypes.func.isRequired,
-                         formulas: React.PropTypes.array,
-                         component: React.PropTypes.oneOfType([React.PropTypes.element,
-                                                               React.PropTypes.string]) }
+    static propTypes = { children: PropTypes.func.isRequired,
+                         formulas: PropTypes.array,
+                         component: PropTypes.oneOfType([PropTypes.element,
+                                                               PropTypes.string]) }
 
     static defaultProps = { formulas: [identity], component }
 
@@ -141,7 +142,7 @@ export function createTrackedComponent(component) {
         </props.component>
       );
     }
-  }
+  };
 }
 
 export const TrackedDiv = createTrackedComponent('div');

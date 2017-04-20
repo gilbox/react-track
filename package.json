@@ -34,6 +34,7 @@
     "functional-easing": "^1.0.8",
     "jsxhint": "^0.12.1",
     "lodash": "^3.10.1",
+    "prop-types": "^15.5.8",
     "raf": "^3.1.0",
     "react": "^0.14 || ^15",
     "react-dom": "^0.14 || ^15",
