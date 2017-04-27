@@ -7,7 +7,7 @@
     "type": "git",
     "url": "https://github.com/gilbox/react-track.git"
   },
-  "homepage": "https://github.com/gilbox/react-track/blob/latest/README.md",
+  "homepage": "https://github.com/gilbox/react-track/blob/master/README.md",
   "bugs": "https://github.com/gilbox/react-track/issues",
   "scripts": {
     "build-global": "rm -rf build/global && NODE_ENV=production webpack src/index.js build/global/react-track.js && NODE_ENV=production COMPRESS=1 webpack src/index.js build/global/react-track.min.js && echo \"gzipped, the global build is `gzip -c build/global/react-track.min.js | wc -c` bytes\"",
