@@ -55,7 +55,8 @@ export const Track = createInjector('div');
 export class TrackDocument extends React.Component {
   static propTypes = { children: PropTypes.func.isRequired,
                        formulas: PropTypes.array,
-                       updateOnDidMount: PropTypes.bool }
+                       updateOnDidMount: PropTypes.bool,
+                       rootElement: PropTypes.instanceOf(HTMLElement) }
 
   static defaultProps = { formulas: [identity], updateOnDidMount: false }
 
@@ -69,7 +70,8 @@ export class TrackDocument extends React.Component {
     let rafId;
 
     const update = () => {
-      this.setState({ rect: document.documentElement.getBoundingClientRect() });
+      const rootElement = this.props.rootElement || document.documentElement;
+      this.setState({ rect: rootElement.getBoundingClientRect() });
     }
 
     const handleScroll = event => {
@@ -77,11 +79,13 @@ export class TrackDocument extends React.Component {
       rafId = raf(update);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    const scrollSource = this.props.rootElement || window;
+
+    scrollSource.addEventListener('scroll', handleScroll);
 
     this.removeScrollHandler = () => {
       cancel(rafId);
-      window.removeEventListener('scroll', handleScroll);
+      scrollSource.removeEventListener('scroll', handleScroll);
     }
 
     if (this.props.updateOnDidMount) {
@@ -95,7 +99,7 @@ export class TrackDocument extends React.Component {
 
   render() {
     let {rect} = this.state;
-    let element = typeof document !== 'undefined' && document.documentElement;
+    let element = typeof document !== 'undefined' && (this.props.rootElement || document.documentElement);
     if (!rect) {
       if (element) {
         rect = element.getBoundingClientRect();
